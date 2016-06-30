@@ -3,7 +3,7 @@
 
 ## Usage
 ```
-var ImageSize = require( './ImageSize' );
+var ImageSize = require( '@lassehaslev/imagesizerjs' );
 var imageSize = new ImageSize( document.querySelector( 'img' ), {
     steps: 200, // How many pixels before new image
 } );

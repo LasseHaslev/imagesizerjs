@@ -1,0 +1,18 @@
+{
+  "name": "image-size",
+  "version": "0.1.0",
+  "description": "Adds image size options to filname ( Automaticly ads -{width}x{height}-resize to filename ).",
+  "main": "src/ImageSize.js",
+  "author": "Lasse S. Haslev <lasse@haslev.no>",
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "prod": "gulp --production",
+    "dev": "gulp watch"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "laravel-elixir": "^5.0.0",
+    "bootstrap-sass": "^3.3.0"
+  }
+}

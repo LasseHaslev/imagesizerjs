@@ -1,5 +1,5 @@
 {
-  "name": "image-size",
+  "name": "@lassehaslev/imagesizerjs",
   "version": "0.1.0",
   "description": "Adds image size options to filname ( Automaticly ads -{width}x{height}-resize to filename ).",
   "main": "src/ImageSize.js",

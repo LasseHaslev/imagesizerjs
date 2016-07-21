@@ -1,81 +1,81 @@
-// Get image
-var getImage = function() {
-    getClosestWidth.call( this );
-    displayImage.call( this );
-};
-
-// Get the closest width based on the steps available
-var getClosestWidth = function() {
-
-    // Check how many steps away we are
-    var stepsOnTheWay = this.element.offsetWidth / this.options.steps;
-
-    // Round up
-    stepsOnTheWay = Math.ceil( stepsOnTheWay );
-
-    // Calculate ratio to height
-    var heightRatio = this.height / this.width;
-
-    var newWidth = Math.round( this.options.steps * stepsOnTheWay );
-    var newHeight = Math.round( newWidth * heightRatio );
-
-    if ( newWidth > this.currentWidth ) {
-        this.currentWidth = newWidth;
-        this.currentHeight = newHeight;
-    }
-
-};
-
-// Set the src attribute
-var displayImage = function() {
-    var newUrl = createImageUrl.call( this );
-    this.element.setAttribute( 'src', newUrl );
-};
-
-// Create image url in Croppa format
-var createImageUrl = function() {
-    var regex = /^(.+)(\.[a-z]+)$/i;
-    var self = this;
-    var replacer = function( string, p1, p2 ) {
-
-        var width = self.currentWidth ? self.currentWidth : '_';
-        var height = self.currentHeight ? self.currentHeight : '_';
-
-        var suffix = '-';
-        var size = width + 'x' + height;
-
-        var resize = self.resize ? '-resize' : '';
-
-        return p1 + suffix + size + resize + p2;
-    };
-    return this.url.replace( regex, replacer );
-};
-
-// Set events
-var setEvents = function () {
-
-    var self = this;
-    var onEvent = function() {
-        getImage.call( self );
+var ImageSize = function( element ) {
+    // -- Create functions
+    // Get image
+    this.getImage = function() {
+        this.getClosestWidth();
+        this.displayImage();
     };
 
-    window.addEventListener( 'resize', onEvent );
+    // Get the closest width based on the steps available
+    this.getClosestWidth = function() {
 
-    // $(window).on('resize.fittext orientationchange.fittext', resizer);
-};
+        // Check how many steps away we are
+        var stepsOnTheWay = this.element.offsetWidth / this.options.steps;
 
-// Utility method to extend defaults with user options
-function extendDefaults(source, properties) {
-    var property;
-    for (property in properties) {
-        if (properties.hasOwnProperty(property)) {
-            source[property] = properties[property];
+        // Round up
+        stepsOnTheWay = Math.ceil( stepsOnTheWay );
+
+        // Calculate ratio to height
+        var heightRatio = this.height / this.width;
+
+        var newWidth = Math.round( this.options.steps * stepsOnTheWay );
+        var newHeight = Math.round( newWidth * heightRatio );
+
+        if ( newWidth > this.currentWidth ) {
+            this.currentWidth = newWidth;
+            this.currentHeight = newHeight;
         }
-    }
-    return source;
-};
 
-module.exports = function( element ) {
+    };
+
+    // Set the src attribute
+    this.displayImage = function() {
+        var newUrl = this.createImageUrl();
+        this.element.setAttribute( 'src', newUrl );
+    };
+
+    // Create image url in Croppa format
+    this.createImageUrl = function() {
+        var regex = /^(.+)(\.[a-z]+)$/i;
+        var self = this;
+        var replacer = function( string, p1, p2 ) {
+
+            var width = self.currentWidth ? self.currentWidth : '_';
+            var height = self.currentHeight ? self.currentHeight : '_';
+
+            var suffix = '-';
+            var size = width + 'x' + height;
+
+            var resize = self.resize ? '-resize' : '';
+
+            return p1 + suffix + size + resize + p2;
+        };
+        return this.url.replace( regex, replacer );
+    };
+
+    // Set events
+    this.setEvents  = function() {
+        var self = this;
+        var onEvent = function() {
+            self.getImage();
+        };
+
+        window.addEventListener( 'resize', onEvent );
+
+        // $(window).on('resize.fittext orientationchange.fittext', resizer);
+    };
+
+    // Utility method to extend defaults with user options
+    function extendDefaults(source, properties) {
+        var property;
+        for (property in properties) {
+            if (properties.hasOwnProperty(property)) {
+                source[property] = properties[property];
+            }
+        }
+        return source;
+    };
+
 
     // Setup options
     var defaults = {
@@ -104,12 +104,18 @@ module.exports = function( element ) {
     this.currentHeight = null;
 
     // Call functions
-    getImage.call( this );
+    this.getImage();
 
     // Set the events
-    setEvents.call( this );
+    this.setEvents();
 
     return this;
 
 };
 
+// Export module or create new ImageSize
+if (typeof module !== "undefined" && module !== null) {
+    module.exports = ImageSize;
+} else {
+    window.ImageSize = ImageSize;
+}

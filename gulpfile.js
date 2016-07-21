@@ -12,7 +12,7 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.browserify( './src/app.js', 'dist/js/build.js' );
+    mix.browserify( './src/app.js', 'dist/build/build.js' );
     mix.browserSync({
         files: [
             '*.html',
@@ -21,5 +21,6 @@ elixir(function(mix) {
         proxy: null,
         server: './',
     });
+    mix.scripts( './src/ImageSize.js', 'dist/ImageSize.js' );
     // mix.sass('app.scss');
 });

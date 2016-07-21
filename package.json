@@ -7,11 +7,12 @@
   "license": "ISC",
   "scripts": {
     "prod": "gulp --production",
-    "dev": "gulp watch"
+    "dev": "gulp watch",
+    "prepublish": "npm run prod"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
     "laravel-elixir": "^5.0.0",
-    "bootstrap-sass": "^3.3.0"
+    "uglify-js": "^2.7.0"
   }
 }

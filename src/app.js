@@ -1,5 +1,7 @@
 var imageObject = document.querySelector( 'img' );
-console.log(imageObject);
+// console.log(imageObject);
+// import ImageSize from './ImageSize';
+// var ImageSize = require( './ImageSize' );
 var ImageSize = require( './ImageSize' );
 console.log(ImageSize);
 

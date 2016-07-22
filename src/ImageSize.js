@@ -78,7 +78,7 @@ var ImageSize = function( element ) {
 
 
     // Setup options
-    this.defaults = {
+    this.options = {
         'srcAttribute' : 'size-src',
         'keyAttribute' : 'key',
         'resizeAttribute' : 'resize',
@@ -87,7 +87,7 @@ var ImageSize = function( element ) {
 
     // Create options by extending defaults with the passed in arugments
     if (arguments[1] && typeof arguments[1] === "object") {
-        this.options = this.extendDefaults(this.defaults, arguments[1]);
+        this.options = this.extendDefaults(this.options, arguments[1]);
     }
 
     // Set variables

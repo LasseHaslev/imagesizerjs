@@ -66,7 +66,7 @@ var ImageSize = function( element ) {
     };
 
     // Utility method to extend defaults with user options
-    function extendDefaults(source, properties) {
+    this.extendDefaults = function(source, properties) {
         var property;
         for (property in properties) {
             if (properties.hasOwnProperty(property)) {
@@ -78,7 +78,7 @@ var ImageSize = function( element ) {
 
 
     // Setup options
-    var defaults = {
+    this.defaults = {
         'srcAttribute' : 'size-src',
         'keyAttribute' : 'key',
         'resizeAttribute' : 'resize',
@@ -87,7 +87,7 @@ var ImageSize = function( element ) {
 
     // Create options by extending defaults with the passed in arugments
     if (arguments[1] && typeof arguments[1] === "object") {
-        this.options = extendDefaults(defaults, arguments[1]);
+        this.options = this.extendDefaults(this.defaults, arguments[1]);
     }
 
     // Set variables

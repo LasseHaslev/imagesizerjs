@@ -1,0 +1,2 @@
+[ ] Add what property we should add image to etc. background-image instead of src on image tag.
+[ ] Add type contain, fit/resize so the size can also be a factor for the image size

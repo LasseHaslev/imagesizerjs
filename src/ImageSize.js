@@ -1,72 +1,49 @@
-var ImageSize = function( element ) {
-    // -- Create functions
-    // Get image
-    this.getImage = function() {
-        this.getClosestWidth();
-        this.displayImage();
-    };
+class ImageSize {
 
-    // Get the closest width based on the steps available
-    this.getClosestWidth = function() {
+    constructor( element, options ) {
 
-        // Check how many steps away we are
-        var stepsOnTheWay = this.element.offsetWidth / this.options.steps;
+        // Setup options
+        this.options = {
+            'srcAttribute' : 'size-src',
+            'resizeAttribute' : 'resize',
 
-        // Round up
-        stepsOnTheWay = Math.ceil( stepsOnTheWay );
+            width: null,
+            height: null,
+            resize: false,
+        };
 
-        // Calculate ratio to height
-        var heightRatio = this.height / this.width;
-
-        var newWidth = Math.round( this.options.steps * stepsOnTheWay );
-        var newHeight = Math.round( newWidth * heightRatio );
-
-        if ( newWidth > this.currentWidth ) {
-            this.currentWidth = newWidth;
-            this.currentHeight = newHeight;
+        // Create options by extending defaults with the passed in arugments
+        if (options && typeof options === "object") {
+            this.options = this.extendDefaults(this.options, options);
         }
 
-    };
+        // Set variables
+        this.element = element;
+        this.url = this.element.getAttribute( this.options.srcAttribute );
+        this.width = parseInt( element.getAttribute( 'width' ) );
+        this.height = parseInt( element.getAttribute( 'height' ) );
 
-    // Set the src attribute
-    this.displayImage = function() {
-        var newUrl = this.createImageUrl();
-        this.element.setAttribute( 'src', newUrl );
-    };
+        this.resize = element.getAttribute( this.options.resizeAttribute );
+        this.resize = this.resize == 'true' ? true : false;
 
-    // Create image url in Croppa format
-    this.createImageUrl = function() {
-        var regex = /^(.+)(\.[a-z]+)$/i;
-        var self = this;
-        var replacer = function( string, p1, p2 ) {
+        // The current width
+        this.currentWidth = null;
+        this.currentHeight = null;
 
-            var width = self.currentWidth ? self.currentWidth : '_';
-            var height = self.currentHeight ? self.currentHeight : '_';
+        // Run functions
+        this.init();
+    }
 
-            var suffix = '-';
-            var size = width + 'x' + height;
+    init() {
+        this.changeImage({
+            width: this.getWidth(),
+            height: this.getHeight(),
+            resize: this.getResize(),
+        });
+    }
 
-            var resize = self.resize ? '-resize' : '';
-
-            return p1 + suffix + size + resize + p2;
-        };
-        return this.url.replace( regex, replacer );
-    };
-
-    // Set events
-    this.setEvents  = function() {
-        var self = this;
-        var onEvent = function() {
-            self.getImage();
-        };
-
-        window.addEventListener( 'resize', onEvent );
-
-        // $(window).on('resize.fittext orientationchange.fittext', resizer);
-    };
-
-    // Utility method to extend defaults with user options
-    this.extendDefaults = function(source, properties) {
+    // Extends options
+    extendDefaults(source, properties) {
         var property;
         for (property in properties) {
             if (properties.hasOwnProperty(property)) {
@@ -76,46 +53,70 @@ var ImageSize = function( element ) {
         return source;
     };
 
-
-    // Setup options
-    this.options = {
-        'srcAttribute' : 'size-src',
-        'keyAttribute' : 'key',
-        'resizeAttribute' : 'resize',
-        'steps' : 200,
-    };
-
-    // Create options by extending defaults with the passed in arugments
-    if (arguments[1] && typeof arguments[1] === "object") {
-        this.options = this.extendDefaults(this.options, arguments[1]);
+    /*
+     * Change src
+     */
+    changeImage( options ) {
+        var url = this.createResizeUrl( this.getSizeSrc(), options );
+        this.element.setAttribute( 'src', url );
     }
 
-    // Set variables
-    this.element = element;
-    this.url = this.element.getAttribute( this.options.srcAttribute );
-    this.width = parseInt( element.getAttribute( 'width' ) );
-    this.height = parseInt( element.getAttribute( 'height' ) );
+    createResizeUrl( originalPath, options ) {
 
-    this.resize = element.getAttribute( this.options.resizeAttribute );
-    this.resize = this.resize == 'true' ? true : false;
+        var regex = /^(.+)(\.[a-z]+)$/i;
+        var self = this;
 
-    // The current width
-    this.currentWidth = null;
-    this.currentHeight = null;
+        // Extends default options
+        options = this.extendDefaults( {
+            width: null,
+            height: null,
+            resize: false,
+        }, options );
 
-    // Call functions
-    this.getImage();
+        // Return originalPath if none of width or height is set
+        if ( !options.width && !options.height ) {
+            return originalPath;
+        }
 
-    // Set the events
-    this.setEvents();
+        // Replacer logic
+        var replacer = function( string, p1, p2 ) {
 
-    return this;
+            var width = options.width ? options.width : '_';
+            var height = options.height ? options.height : '_';
 
-};
+            var suffix = '-';
+            var size = width + 'x' + height;
 
-// Export module or create new ImageSize
-if (typeof module !== "undefined" && module !== null) {
-    module.exports = ImageSize;
-} else {
-    window.ImageSize = ImageSize;
+            var resize = options.resize ? '-resize' : '';
+
+            return p1 + suffix + size + resize + p2;
+        };
+        return originalPath.replace( regex, replacer );
+
+    }
+
+    /*
+     * Getters
+     */
+    getSizeSrc() {
+        return this.element.getAttribute( this.options.srcAttribute );
+    }
+
+    getWidth() {
+        return this.options.width ? this.options.width : this.element.getAttribute( 'width' );
+    }
+
+    getHeight() {
+        return this.options.height ? this.options.height : this.element.getAttribute( 'height' );
+    }
+
+    getResize() {
+        if ( this.options.resize ) {
+            return this.options.resize;
+        }
+
+        var resize = this.element.getAttribute( this.options.resizeAttribute );
+        return Boolean( resize == 'true' || resize == '1' );
+    }
+
 }

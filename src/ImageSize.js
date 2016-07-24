@@ -61,7 +61,6 @@ class ImageSize {
      */
     changeImage( options ) {
         var url = this.createResizeUrl( this.getSizeSrc(), options );
-        console.log(this.options.src);
         switch (this.options.src) {
             case 'background-image':
                 this.changeBackgroundImage( url );

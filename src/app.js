@@ -5,15 +5,13 @@ var imageSize = new ImageSizer( imageObject, {
     height: 400,
     resize: true,
     step: 100,
-    src: 'background-image',
 } );
 
 
 // import ImageSize from '../dist/ImageSize';
 var imageSize = new ImageSizer( document.querySelector( '.img-background' ), {
-    width: 400,
-    height: 400,
     resize: true,
     step: 100,
     src: 'background-image',
+    resizeType: 'contain',
 } );

@@ -8,11 +8,14 @@ class ImageSizer extends ImageSize {
         this.options.stepWidth = this.options.step;
         this.options.stepHeight = this.options.step;
 
-
-        this.options.type = 'resize';
+        this.options.resizeType = 'normal'; // And contain
 
         this.currentWidth = 0;
         this.currentHeight = 0;
+
+        if (options && typeof options === "object") {
+            this.options = this.extendDefaults(this.options, options);
+        }
 
         this.sizerInit();
 
@@ -33,7 +36,17 @@ class ImageSizer extends ImageSize {
     }
 
     handleImage() {
-        this.resizeToWidth();
+        if ( this.options.resizeType == 'contain' ) {
+            if ( this.getElementWidth() > this.getElementHeight() ) {
+                this.resizeToWidth();
+            }
+            else {
+                this.resizeToHeight();
+            }
+        }
+        else {
+            this.resizeToWidth();
+        }
         // this.resizeToHeight();
     }
 

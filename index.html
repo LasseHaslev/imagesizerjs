@@ -6,10 +6,24 @@
         <title>ImageSize plugin</title>
     </head>
     <body>
-        <img size-src="http://test.dev/image.jpg"
-             width="1000"
-             height="500"
+        <img size-src="http://dryeyemedia.dev/images/picjumbo.com_HNCK8749.jpg"
+             resize="true"
+             width="4000"
+             height="2667"
         style="max-width: 100%; height: auto;">
+
+        <div class="img-background"
+            width="4000"
+            height="2667"
+            size-src="http://dryeyemedia.dev/images/picjumbo.com_HNCK8749.jpg" 
+            style="
+                width:50%;
+                padding-bottom:100%;
+                background-image: url( http://dryeyemedia.dev/images/picjumbo.com_HNCK8749.jpg );
+                background-size: cover;
+                background-color: gray;
+                ">
+        </div>
 
         <script src="/dist/build/build.js"></script>
 

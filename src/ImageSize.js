@@ -10,6 +10,9 @@ class ImageSize {
             width: null,
             height: null,
             resize: false,
+
+            src: 'src',
+
         };
 
         // Create options by extending defaults with the passed in arugments
@@ -58,6 +61,23 @@ class ImageSize {
      */
     changeImage( options ) {
         var url = this.createResizeUrl( this.getSizeSrc(), options );
+        console.log(this.options.src);
+        switch (this.options.src) {
+            case 'background-image':
+                this.changeBackgroundImage( url );
+                break;
+            
+            // Src like img src
+            default:
+                this.changeSrcImage( url );
+        }
+    }
+
+    changeBackgroundImage( url ) {
+        this.element.style.backgroundImage = 'url(' + url + ')';
+    }
+
+    changeSrcImage( url ) {
         this.element.setAttribute( 'src', url );
     }
 

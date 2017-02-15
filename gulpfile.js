@@ -11,21 +11,16 @@ var elixir = require('laravel-elixir');
  |
  */
 
-elixir(function(mix) {
-    mix.scripts( [
-        './src/ImageSize.js',
-        './src/ImageSizer.js',
-        './src/after.js',
-    ], 'dist/ImageSize.js' );
+elixir.config.assetsPath = 'src';
+elixir.config.publicPath = 'dist';
 
-    mix.browserify( './src/app.js', 'dist/build/build.js' );
-    mix.browserSync({
-        files: [
-            '*.html',
-            'dist/**/*',
-        ],
-        proxy: null,
-        server: './',
-    });
-    // mix.sass('app.scss');
+elixir(function(mix) {
+
+    mix.scripts([
+        '../ImageSize.js',
+        '../ImageSizer.js',
+        '../after.js',
+    ], 'dist/ImageSizer.js');
+
+    mix.webpack('app.js');
 });

@@ -4,28 +4,66 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
         <title>ImageSize plugin</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.css" type="text/css" media="screen" title="no title" charset="utf-8">
     </head>
     <body>
-        <img size-src="http://homestead.app/storage/uploads/images/13b81407796cd029faca1b0dc56f7506.jpeg"
-             resize="true"
-             width="4000"
-             height="2667"
-        style="max-width: 100%; height: auto;">
 
-        <div class="img-background"
-            width="4000"
-            height="2667"
-            size-src="http://homestead.app/storage/uploads/images/13b81407796cd029faca1b0dc56f7506.jpeg" 
-            style="
-                width:50%;
-                padding-bottom:100%;
-                background-image: url( http://homestead.app/storage/uploads/images/13b81407796cd029faca1b0dc56f7506.jpeg );
-                background-size: cover;
-                background-color: gray;
-                ">
+        <div class="section">
+            <div class="container">
+                <h1 class="title">Image</h1>
+                <img size-src="http://homestead.app/storage/uploads/images/13b81407796cd029faca1b0dc56f7506.jpeg"
+                    resize="true"
+                    width="4000"
+                    height="2667">
+
+                <h3 class="title">Aspect ratio</h3>
+                <div class="columns">
+                    <div class="column">
+                        <h4 class="subtitle">aspect="1x1"</h4>
+                        <img size-src="http://homestead.app/storage/uploads/images/13b81407796cd029faca1b0dc56f7506.jpeg"
+                            resize="true"
+                            width="4000"
+                            height="2667"
+                            aspect="1x1">
+                    </div>
+                    <div class="column">
+                        <h4 class="subtitle">aspect="2x1"</h4>
+                        <img size-src="http://homestead.app/storage/uploads/images/13b81407796cd029faca1b0dc56f7506.jpeg"
+                            resize="true"
+                            width="4000"
+                            height="2667"
+                            aspect="2x1">
+                    </div>
+                    <div class="column">
+                        <h4 class="subtitle">aspect="3x4"</h4>
+                        <img size-src="http://homestead.app/storage/uploads/images/13b81407796cd029faca1b0dc56f7506.jpeg"
+                            resize="true"
+                            width="4000"
+                            height="2667"
+                            aspect="3x4">
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <script src="/dist/js/app.js"></script>
+        <div class="section">
+            <div class="container">
+                <h1 class="title">Background</h1>
+                <div class="img-background"
+                    width="4000"
+                    height="2667"
+                    size-src="http://homestead.app/storage/uploads/images/13b81407796cd029faca1b0dc56f7506.jpeg" 
+                    style="
+                        width:50%;
+                        padding-bottom:100%;
+                        background-size: cover;
+                        background-color: gray;
+                        ">
+                </div>
+            </div>
+        </div>
 
+
+        <script src="/dist/js/app.js"></script>
     </body>
 </html>

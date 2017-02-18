@@ -249,15 +249,12 @@ class ImageSizer extends ImageSize {
         if (this.aspect) {
             // get ratio of height based on width
             var aspect = this.getAspectRatio();
-            console.log(aspect);
             if ( aspect.width == aspect.height ) {
                 var ratio = 1;
             }
             else {
                 var ratio = aspect.height / aspect.width;
             }
-
-            console.log(ratio);
 
             // calculate height of with based on ratio
             return Math.round( width * ratio );

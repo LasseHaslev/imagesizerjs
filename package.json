@@ -9,7 +9,7 @@
     "serve": "browser-sync start --server --files 'index.html' 'dist/**/*.*'",
     "watch-assets": "gulp watch",
     "dev": "npm-run-all --parallel watch-assets serve",
-    "production": "rm -rf dist/ && mkdir dist && gulp && babel ./dist/ImageSizer.js -o ./dist/ImageSizer.js",
+    "build": "rm -rf dist/ && mkdir dist && gulp && babel ./dist/ImageSizer.js -o ./dist/ImageSizer.js",
     "prepublish": "npm run production"
   },
   "devDependencies": {
